@@ -1,0 +1,62 @@
+{
+  "text.autoconfig.skyblockchatfilter.title": "Skyblock Chat-Filter Configuration",
+
+  "text.autoconfig.skyblockchatfilter.category.general": "General Filters",
+  "text.autoconfig.skyblockchatfilter.category.dungeons": "Dungeon Filters",
+
+  "text.autoconfig.skyblockchatfilter.option.hideHubTrades": "Hide Hub Trades",
+  "text.autoconfig.skyblockchatfilter.option.hideHubTrades.@Tooltip[0]": "Hides messages from people wanting to sell/buy items.",
+  "text.autoconfig.skyblockchatfilter.option.hideHubTrades.@Tooltip[1]": "Example: '[VIP] Player: selling adaptive helm /ah'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideLowballing": "Hide Lowballing",
+  "text.autoconfig.skyblockchatfilter.option.hideLowballing.@Tooltip[0]": "Hides lowballing advertisements from the chat.",
+  "text.autoconfig.skyblockchatfilter.option.hideLowballing.@Tooltip[1]": "Example: '[MVP+] Player: lb 200m sowas'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideRngPopups": "Hide RNG Drop Popups",
+  "text.autoconfig.skyblockchatfilter.option.hideRngPopups.@Tooltip[0]": "Hides server-wide RNG drop broadcast messages.",
+  "text.autoconfig.skyblockchatfilter.option.hideRngPopups.@Tooltip[1]": "Example: 'CRAZY RARE DROP! Player obtained 1x Handle'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideLobbyJoinMessages": "Hide Lobby Join Messages",
+  "text.autoconfig.skyblockchatfilter.option.hideLobbyJoinMessages.@Tooltip[0]": "Hides the messages of players joining the server lobby.",
+  "text.autoconfig.skyblockchatfilter.option.hideLobbyJoinMessages.@Tooltip[1]": "Example: '[MVP+] Player joined the lobby!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideMysteryBoxMessages": "Hide Mystery Box Found",
+  "text.autoconfig.skyblockchatfilter.option.hideMysteryBoxMessages.@Tooltip[0]": "Hides the message whenever you or someone else finds a Mystery Box.",
+  "text.autoconfig.skyblockchatfilter.option.hideMysteryBoxMessages.@Tooltip[1]": "Example: 'Player found a Mystery Box!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideProfileIdMessages": "Hide Profile ID Spam",
+  "text.autoconfig.skyblockchatfilter.option.hideProfileIdMessages.@Tooltip[0]": "Hides the Profile ID string printed when joining a Skyblock world.",
+  "text.autoconfig.skyblockchatfilter.option.hideProfileIdMessages.@Tooltip[1]": "Example: 'Profile ID: a3b8d1b6-0b3b-4b1a'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideSendingToServer": "Hide Server Transfers",
+  "text.autoconfig.skyblockchatfilter.option.hideSendingToServer.@Tooltip[0]": "Hides the 'Sending to server X' text.",
+  "text.autoconfig.skyblockchatfilter.option.hideSendingToServer.@Tooltip[1]": "Example: 'Sending to server mini72J...'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideMinionSpeech": "Hide Minion Text",
+  "text.autoconfig.skyblockchatfilter.option.hideMinionSpeech.@Tooltip[0]": "Hides the text minions say above their heads, like when full.",
+  "text.autoconfig.skyblockchatfilter.option.hideMinionSpeech.@Tooltip[1]": "Example: 'My storage is full!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideEventAnnouncements": "Hide Skyblock Events",
+  "text.autoconfig.skyblockchatfilter.option.hideEventAnnouncements.@Tooltip[0]": "Hides event reminder messages (Spooky Festival, Dark Auction, etc).",
+  "text.autoconfig.skyblockchatfilter.option.hideEventAnnouncements.@Tooltip[1]": "Example: 'The Dark Auction is starting!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideFastClickWarnings": "Hide 'Clicking Too Fast'",
+  "text.autoconfig.skyblockchatfilter.option.hideFastClickWarnings.@Tooltip[0]": "Hides the spammy block placement cancel warnings.",
+  "text.autoconfig.skyblockchatfilter.option.hideFastClickWarnings.@Tooltip[1]": "Example: 'Placing blocks too fast!' or 'This is a little fast.'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideCoopChatter": "Hide Co-op Chat",
+  "text.autoconfig.skyblockchatfilter.option.hideCoopChatter.@Tooltip[0]": "Hides all messages sent in the co-op chat channel.",
+  "text.autoconfig.skyblockchatfilter.option.hideCoopChatter.@Tooltip[1]": "Example: 'Co-op > Player: hello'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideDungeonBlessings": "Hide Dungeon Blessings",
+  "text.autoconfig.skyblockchatfilter.option.hideDungeonBlessings.@Tooltip[0]": "Hides the blessing pickup messages as well as the granted stats.",
+  "text.autoconfig.skyblockchatfilter.option.hideDungeonBlessings.@Tooltip[1]": "Example: 'A Blessing of Life was picked up!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideEssenceDrops": "Hide Essence Drops",
+  "text.autoconfig.skyblockchatfilter.option.hideEssenceDrops.@Tooltip[0]": "Hides chat prints related to finding essences in dungeons.",
+  "text.autoconfig.skyblockchatfilter.option.hideEssenceDrops.@Tooltip[1]": "Example: 'You found a Wither Essence!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam": "Hide Watcher Spam",
+  "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam.@Tooltip[0]": "Hides Watcher's dialogue lines, leaving only important stage calls.",
+  "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam.@Tooltip[1]": "Example: '[BOSS] The Watcher: interesting...'"
+}
