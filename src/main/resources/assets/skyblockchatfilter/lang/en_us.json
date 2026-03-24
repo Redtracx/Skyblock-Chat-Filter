@@ -58,5 +58,37 @@
 
   "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam": "Hide Watcher Spam",
   "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam.@Tooltip[0]": "Hides Watcher's dialogue lines, leaving only important stage calls.",
-  "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam.@Tooltip[1]": "Example: '[BOSS] The Watcher: interesting...'"
+  "text.autoconfig.skyblockchatfilter.option.hideWatcherSpam.@Tooltip[1]": "Example: '[BOSS] The Watcher: interesting...'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideScamAdverts": "Hide Scam Adverts",
+  "text.autoconfig.skyblockchatfilter.option.hideScamAdverts.@Tooltip[0]": "Hides quitting, giveaway and other scam attempts.",
+  "text.autoconfig.skyblockchatfilter.option.hideScamAdverts.@Tooltip[1]": "Example: 'QUITTING SKYBLOCK! Giving away 50m /visit Player'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideCarryAdverts": "Hide Carry Adverts",
+  "text.autoconfig.skyblockchatfilter.option.hideCarryAdverts.@Tooltip[0]": "Hides messages selling dungeon or Kuudra carries.",
+  "text.autoconfig.skyblockchatfilter.option.hideCarryAdverts.@Tooltip[1]": "Example: 'Selling F7 S+ Carry 5m'",
+
+  "text.autoconfig.skyblockchatfilter.option.hidePetMessages": "Hide Pet Messages",
+  "text.autoconfig.skyblockchatfilter.option.hidePetMessages.@Tooltip[0]": "Hides Autopet equipping and Pet Level-Up.",
+  "text.autoconfig.skyblockchatfilter.option.hidePetMessages.@Tooltip[1]": "Example: 'Autopet equipped your [Lvl 100] Squid!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideAbilityMessages": "Hide Ability Feedback",
+  "text.autoconfig.skyblockchatfilter.option.hideAbilityMessages.@Tooltip[0]": "Hides ability chatter like 'Not enough mana!'",
+  "text.autoconfig.skyblockchatfilter.option.hideAbilityMessages.@Tooltip[1]": "Example: 'Not enough mana! (50 Mana required)'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideKuudraActionSpam": "Hide Kuudra Spam",
+  "text.autoconfig.skyblockchatfilter.option.hideKuudraActionSpam.@Tooltip[0]": "Hides excessive action text in Kuudra boss fights.",
+  "text.autoconfig.skyblockchatfilter.option.hideKuudraActionSpam.@Tooltip[1]": "Example: 'Player has recovered a Supply!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideFireSales": "Hide Fire Sales",
+  "text.autoconfig.skyblockchatfilter.option.hideFireSales.@Tooltip[0]": "Hides announcements about cosmetic Fire Sales.",
+  "text.autoconfig.skyblockchatfilter.option.hideFireSales.@Tooltip[1]": "Example: '[Fire Sale] The Warden Helmet Skin Fire Sale is starting!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideStashMessages": "Hide Stash Messages",
+  "text.autoconfig.skyblockchatfilter.option.hideStashMessages.@Tooltip[0]": "Hides messages telling you that items are in your stash.",
+  "text.autoconfig.skyblockchatfilter.option.hideStashMessages.@Tooltip[1]": "Example: 'You have 1 item(s) stashed away!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue": "Hide Boss Dialogue",
+  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[0]": "Globally hides chat from bosses (e.g. Sadan, Necron, M7 Dragons).",
+  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[1]": "Example: '[BOSS] Necron: Finally, a worthy opponent!'"
 }

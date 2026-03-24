@@ -49,5 +49,29 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean hideWatcherSpam = true;
 
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideScamAdverts = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideCarryAdverts = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hidePetMessages = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideAbilityMessages = false;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideKuudraActionSpam = false;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideFireSales = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideStashMessages = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideBossDialogue = false;
+
     // We can add more filters here as requested by the user.
 }
