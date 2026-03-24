@@ -84,6 +84,56 @@ public class ChatFilterManager {
             }
         }
 
+        // --- New Community Filters ---
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideScamAdverts) {
+            if (rawFilter.contains("quitting skyblock") || rawFilter.contains("discord.gg/") || rawFilter.contains("selling coins") || rawFilter.contains("giveaway") || (rawFilter.contains("visit") && rawFilter.contains("free"))) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideCarryAdverts) {
+            if ((rawFilter.contains("selling") || rawFilter.contains("sell") || rawFilter.contains("free")) && (rawFilter.contains("carry") || rawFilter.contains("carries") || rawFilter.contains("s+"))) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hidePetMessages) {
+            if (rawFilter.startsWith("autopet equipped your") || rawFilter.contains("leveled up to lvl")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideAbilityMessages) {
+            if (rawFilter.contains("not enough mana") || rawFilter.contains("used wither impact") || rawFilter.contains("this ability is on cooldown")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideKuudraActionSpam) {
+            if (rawFilter.contains("has recovered a supply") || rawFilter.contains("ballista has been built") || rawFilter.contains("is using the cannon") || rawFilter.contains("kuudra's hollow") || rawFilter.contains("token of kuudra")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideFireSales) {
+            if (rawFilter.contains("[fire sale]")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideStashMessages) {
+            if (rawFilter.contains("stashed away!") || (rawFilter.contains("added to your") && rawFilter.contains("stash!")) || rawFilter.contains("click here to pick") || rawFilter.contains("type(s) of material(s) stashed!")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideBossDialogue) {
+            if (rawFilter.startsWith("[boss] ") && !rawFilter.contains("blood door has been opened") && !rawFilter.contains("you have proven yourself")) {
+                return true;
+            }
+        }
+
         return false;
     }
 }
