@@ -1,11 +1,13 @@
 package com.redtracx.skyblockchatfilter;
 
+import com.redtracx.skyblockchatfilter.chat.ChatFilterManager;
 import com.redtracx.skyblockchatfilter.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import org.slf4j.Logger;
@@ -24,6 +26,22 @@ public class SkyblockChatFilterClient implements ClientModInitializer {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         
+        // Register Fabric API chat event filters (new default method, compatible with other mods)
+        ClientReceiveMessageEvents.ALLOW_CHAT.register((message, signedMessage, sender, params, receptionTimestamp) -> {
+            if (config != null && !config.advanced.useLegacyMixin) {
+                return !ChatFilterManager.shouldHideMessage(message);
+            }
+            return true; // legacy mode active — let the Mixin handle it
+        });
+
+        ClientReceiveMessageEvents.ALLOW_GAME.register((message, overlay) -> {
+            if (overlay) return true; // don't filter action bar / overlay messages
+            if (config != null && !config.advanced.useLegacyMixin) {
+                return !ChatFilterManager.shouldHideMessage(message);
+            }
+            return true; // legacy mode active — let the Mixin handle it
+        });
+
         // Register Command
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             dispatcher.register(ClientCommandManager.literal("chatfilter")
@@ -35,3 +53,4 @@ public class SkyblockChatFilterClient implements ClientModInitializer {
         });
     }
 }
+

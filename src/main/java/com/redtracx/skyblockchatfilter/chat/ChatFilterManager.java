@@ -134,6 +134,18 @@ public class ChatFilterManager {
             }
         }
 
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideWatchdogAnnouncements) {
+            if (rawFilter.contains("[watchdog announcement]") || rawFilter.contains("watchdog has banned") || rawFilter.contains("staff have banned an additional") || rawFilter.contains("blacklisted modifications are a bannable offense")) {
+                return true;
+            }
+        }
+
+        if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideWarpingMessages) {
+            if (rawFilter.startsWith("warping...") || rawFilter.startsWith("request join for")) {
+                return true;
+            }
+        }
+
         return false;
     }
 }

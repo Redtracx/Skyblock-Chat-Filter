@@ -6,7 +6,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "skyblockchatfilter")
 public class ModConfig implements ConfigData {
-    
+
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean hideHubTrades = true;
 
@@ -73,5 +73,18 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean hideBossDialogue = false;
 
-    // We can add more filters here as requested by the user.
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideWatchdogAnnouncements = true;
+
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean hideWarpingMessages = true;
+
+    @ConfigEntry.Gui.CollapsibleObject
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public AdvancedSettings advanced = new AdvancedSettings();
+
+    public static class AdvancedSettings {
+        @ConfigEntry.Gui.Tooltip(count = 2)
+        public boolean useLegacyMixin = false;
+    }
 }

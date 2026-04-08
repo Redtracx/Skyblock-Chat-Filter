@@ -90,5 +90,21 @@
 
   "text.autoconfig.skyblockchatfilter.option.hideBossDialogue": "Hide Boss Dialogue",
   "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[0]": "Globally hides chat from bosses (e.g. Sadan, Necron, M7 Dragons).",
-  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[1]": "Example: '[BOSS] Necron: Finally, a worthy opponent!'"
+  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[1]": "Example: '[BOSS] Necron: Finally, a worthy opponent!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideWatchdogAnnouncements": "Hide Watchdog Announcements",
+  "text.autoconfig.skyblockchatfilter.option.hideWatchdogAnnouncements.@Tooltip[0]": "Hides the periodic Watchdog ban statistic announcements.",
+  "text.autoconfig.skyblockchatfilter.option.hideWatchdogAnnouncements.@Tooltip[1]": "Example: '[WATCHDOG ANNOUNCEMENT] Watchdog has banned 6,142 players...'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideWarpingMessages": "Hide Warping / Request Join",
+  "text.autoconfig.skyblockchatfilter.option.hideWarpingMessages.@Tooltip[0]": "Hides 'Warping...' and 'Request join for Hub/Dungeon Hub' messages.",
+  "text.autoconfig.skyblockchatfilter.option.hideWarpingMessages.@Tooltip[1]": "Example: 'Request join for Hub #1 (mega20E)...'",
+
+  "text.autoconfig.skyblockchatfilter.option.advanced": "Advanced Settings",
+  "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[0]": "Advanced options that change how the mod intercepts chat messages.",
+  "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[1]": "Only change these if you know what you are doing.",
+
+  "text.autoconfig.skyblockchatfilter.option.advanced.useLegacyMixin": "Use Legacy Mixin (Deprecated)",
+  "text.autoconfig.skyblockchatfilter.option.advanced.useLegacyMixin.@Tooltip[0]": "Uses the old Mixin ci.cancel() method to hide messages. This may break other mods (Odin, Skyblocker, etc.).",
+  "text.autoconfig.skyblockchatfilter.option.advanced.useLegacyMixin.@Tooltip[1]": "Default: OFF — uses Fabric API events for better mod compatibility."
 }

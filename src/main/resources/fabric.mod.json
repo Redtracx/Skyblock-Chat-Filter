@@ -3,7 +3,7 @@
   "id": "skyblockchatfilter",
   "version": "${version}",
   "name": "Skyblock Chat-Filter",
-  "description": "An intelligent Skyblock Chat-Filter / Tab-Manager for 1.21.x",
+  "description": "An intelligent Skyblock Chat-Filter for 1.21.x",
   "authors": [
     "redtracx"
   ],
