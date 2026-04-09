@@ -32,15 +32,7 @@ public class SkyblockChatFilterClient implements ClientModInitializer {
             if (config != null && !config.advanced.useLegacyMixin) {
                 if (ChatFilterManager.shouldHideMessage(message)) return false;
             }
-
-            // tab system (non-legacy only, since messages pass through unfiltered in legacy mode)
-            if (config != null && !config.advanced.useLegacyMixin
-                    && ChatTabManager.isEnabled() && !ChatTabManager.isReplaying()) {
-                ChatTabManager.bufferMessage(message);
-                if (!ChatTabManager.shouldShowInCurrentTab(message)) return false;
-            }
-
-            return true; // legacy mode active — let the Mixin handle it
+            return true;
         });
 
         ClientReceiveMessageEvents.ALLOW_GAME.register((message, overlay) -> {
@@ -48,14 +40,7 @@ public class SkyblockChatFilterClient implements ClientModInitializer {
             if (config != null && !config.advanced.useLegacyMixin) {
                 if (ChatFilterManager.shouldHideMessage(message)) return false;
             }
-
-            if (config != null && !config.advanced.useLegacyMixin
-                    && ChatTabManager.isEnabled() && !ChatTabManager.isReplaying()) {
-                ChatTabManager.bufferMessage(message);
-                if (!ChatTabManager.shouldShowInCurrentTab(message)) return false;
-            }
-
-            return true; // legacy mode active — let the Mixin handle it
+            return true;
         });
 
         // Register Command

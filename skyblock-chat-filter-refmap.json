@@ -1,0 +1,32 @@
+{
+  "mappings": {
+    "com/redtracx/skyblockchatfilter/mixin/ChatHudAccessor": {
+      "messages": "field_2061:Ljava/util/List;",
+      "scrolledLines": "field_2066:I",
+      "visibleMessages": "field_2064:Ljava/util/List;"
+    },
+    "com/redtracx/skyblockchatfilter/mixin/ChatHudMixin": {
+      "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V": "Lnet/minecraft/class_338;method_44811(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V"
+    },
+    "com/redtracx/skyblockchatfilter/mixin/ChatScreenMixin": {
+      "render": "Lnet/minecraft/class_408;method_25394(Lnet/minecraft/class_332;IIF)V",
+      "sendMessage(Ljava/lang/String;Z)V": "Lnet/minecraft/class_408;method_44056(Ljava/lang/String;Z)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/redtracx/skyblockchatfilter/mixin/ChatHudAccessor": {
+        "messages": "field_2061:Ljava/util/List;",
+        "scrolledLines": "field_2066:I",
+        "visibleMessages": "field_2064:Ljava/util/List;"
+      },
+      "com/redtracx/skyblockchatfilter/mixin/ChatHudMixin": {
+        "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V": "Lnet/minecraft/class_338;method_44811(Lnet/minecraft/class_2561;Lnet/minecraft/class_7469;Lnet/minecraft/class_7591;)V"
+      },
+      "com/redtracx/skyblockchatfilter/mixin/ChatScreenMixin": {
+        "render": "Lnet/minecraft/class_408;method_25394(Lnet/minecraft/class_332;IIF)V",
+        "sendMessage(Ljava/lang/String;Z)V": "Lnet/minecraft/class_408;method_44056(Ljava/lang/String;Z)V"
+      }
+    }
+  }
+}

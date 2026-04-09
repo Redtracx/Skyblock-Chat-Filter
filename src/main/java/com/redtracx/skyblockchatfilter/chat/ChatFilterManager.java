@@ -123,7 +123,7 @@ public class ChatFilterManager {
         }
 
         if (com.redtracx.skyblockchatfilter.SkyblockChatFilterClient.config.hideStashMessages) {
-            if (rawFilter.contains("stashed away!") || (rawFilter.contains("added to your") && rawFilter.contains("stash!")) || rawFilter.contains("click here to pick") || rawFilter.contains("type(s) of material(s) stashed!")) {
+            if (rawFilter.contains("stashed away!") || (rawFilter.contains("added to your") && rawFilter.contains("stash!")) || rawFilter.contains("click here to pick") || rawFilter.contains("pick them up") || rawFilter.contains("type(s) of material(s) stashed!") || rawFilter.contains("from your item stash") || rawFilter.contains("material stash")) {
                 return true;
             }
         }
