@@ -100,6 +100,10 @@
   "text.autoconfig.skyblockchatfilter.option.hideWarpingMessages.@Tooltip[0]": "Hides 'Warping...' and 'Request join for Hub/Dungeon Hub' messages.",
   "text.autoconfig.skyblockchatfilter.option.hideWarpingMessages.@Tooltip[1]": "Example: 'Request join for Hub #1 (mega20E)...'",
 
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs": "Enable Chat Tabs",
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[0]": "Adds channel tabs (All, Party, Guild, Co-op, DMs) above the chat input.",
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[1]": "Selecting a tab filters visible messages and auto-prefixes outgoing chat.",
+
   "text.autoconfig.skyblockchatfilter.option.advanced": "Advanced Settings",
   "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[0]": "Advanced options that change how the mod intercepts chat messages.",
   "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[1]": "Only change these if you know what you are doing.",

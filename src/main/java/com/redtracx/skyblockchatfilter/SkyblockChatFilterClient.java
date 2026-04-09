@@ -1,6 +1,7 @@
 package com.redtracx.skyblockchatfilter;
 
 import com.redtracx.skyblockchatfilter.chat.ChatFilterManager;
+import com.redtracx.skyblockchatfilter.chat.ChatTabManager;
 import com.redtracx.skyblockchatfilter.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -29,16 +30,31 @@ public class SkyblockChatFilterClient implements ClientModInitializer {
         // Register Fabric API chat event filters (new default method, compatible with other mods)
         ClientReceiveMessageEvents.ALLOW_CHAT.register((message, signedMessage, sender, params, receptionTimestamp) -> {
             if (config != null && !config.advanced.useLegacyMixin) {
-                return !ChatFilterManager.shouldHideMessage(message);
+                if (ChatFilterManager.shouldHideMessage(message)) return false;
             }
+
+            // tab system (non-legacy only, since messages pass through unfiltered in legacy mode)
+            if (config != null && !config.advanced.useLegacyMixin
+                    && ChatTabManager.isEnabled() && !ChatTabManager.isReplaying()) {
+                ChatTabManager.bufferMessage(message);
+                if (!ChatTabManager.shouldShowInCurrentTab(message)) return false;
+            }
+
             return true; // legacy mode active — let the Mixin handle it
         });
 
         ClientReceiveMessageEvents.ALLOW_GAME.register((message, overlay) -> {
             if (overlay) return true; // don't filter action bar / overlay messages
             if (config != null && !config.advanced.useLegacyMixin) {
-                return !ChatFilterManager.shouldHideMessage(message);
+                if (ChatFilterManager.shouldHideMessage(message)) return false;
             }
+
+            if (config != null && !config.advanced.useLegacyMixin
+                    && ChatTabManager.isEnabled() && !ChatTabManager.isReplaying()) {
+                ChatTabManager.bufferMessage(message);
+                if (!ChatTabManager.shouldShowInCurrentTab(message)) return false;
+            }
+
             return true; // legacy mode active — let the Mixin handle it
         });
 
