@@ -31,11 +31,27 @@ public enum ChatTab {
     public boolean matches(String rawMessage) {
         return switch (this) {
             case ALL -> true;
-            case PARTY -> rawMessage.contains("party >");
+            case PARTY -> rawMessage.contains("party >") || isPartySystemMessage(rawMessage);
             case GUILD -> rawMessage.contains("guild >");
             case COOP -> rawMessage.contains("co-op >");
             case DMS -> (rawMessage.startsWith("from ") || rawMessage.startsWith("to "))
                         && rawMessage.contains(": ");
         };
+    }
+
+    private static boolean isPartySystemMessage(String raw) {
+        return raw.contains("has invited") && raw.contains("to the party")
+            || raw.contains("joined the party")
+            || raw.contains("has left the party")
+            || raw.contains("was removed from the party")
+            || raw.contains("was kicked from the party")
+            || raw.contains("the party was disbanded")
+            || raw.contains("party leader")
+            || raw.contains("transferred to")
+            || raw.contains("you have joined")
+            || raw.contains("you left the party")
+            || raw.contains("disbanded the party")
+            || raw.contains("party finder")
+            || raw.startsWith("party members");
     }
 }

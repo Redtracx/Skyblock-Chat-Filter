@@ -82,6 +82,9 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean enableChatTabs = true;
 
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean enableRightClickCopy = true;
+
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip(count = 2)
     public AdvancedSettings advanced = new AdvancedSettings();

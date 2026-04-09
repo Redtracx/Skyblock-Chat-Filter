@@ -19,12 +19,20 @@ public abstract class ChatHudMixin {
     private void onAddMessage(Text message, @Nullable MessageSignatureData signature, @Nullable MessageIndicator indicator, CallbackInfo ci) {
         if (ChatTabManager.isReplaying()) return;
 
-        // Only use the legacy Mixin cancel method if explicitly enabled in config
+        // legacy mixin filter
         if (SkyblockChatFilterClient.config != null
                 && SkyblockChatFilterClient.config.advanced.useLegacyMixin
                 && ChatFilterManager.shouldHideMessage(message)) {
             ci.cancel();
+            return;
+        }
+
+        // tab system — catches ALL messages including those from other mods
+        if (ChatTabManager.isEnabled()) {
+            ChatTabManager.bufferMessage(message);
+            if (!ChatTabManager.shouldShowInCurrentTab(message)) {
+                ci.cancel();
+            }
         }
     }
 }
-

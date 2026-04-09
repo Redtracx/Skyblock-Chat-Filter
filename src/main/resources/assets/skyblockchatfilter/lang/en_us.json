@@ -104,6 +104,10 @@
   "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[0]": "Adds channel tabs (All, Party, Guild, Co-op, DMs) above the chat input.",
   "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[1]": "Selecting a tab filters visible messages and auto-prefixes outgoing chat.",
 
+  "text.autoconfig.skyblockchatfilter.option.enableRightClickCopy": "Right-Click Copy",
+  "text.autoconfig.skyblockchatfilter.option.enableRightClickCopy.@Tooltip[0]": "Right-click a chat message to copy its text to your clipboard.",
+  "text.autoconfig.skyblockchatfilter.option.enableRightClickCopy.@Tooltip[1]": "Shows a brief confirmation on the action bar when copied.",
+
   "text.autoconfig.skyblockchatfilter.option.advanced": "Advanced Settings",
   "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[0]": "Advanced options that change how the mod intercepts chat messages.",
   "text.autoconfig.skyblockchatfilter.option.advanced.@Tooltip[1]": "Only change these if you know what you are doing.",

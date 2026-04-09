@@ -1,7 +1,10 @@
 package com.redtracx.skyblockchatfilter.mixin;
 
+import com.redtracx.skyblockchatfilter.SkyblockChatFilterClient;
 import com.redtracx.skyblockchatfilter.chat.ChatTab;
 import com.redtracx.skyblockchatfilter.chat.ChatTabManager;
+import net.minecraft.client.gui.hud.ChatHud;
+import net.minecraft.client.gui.hud.ChatHudLine;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,10 +19,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import org.joml.Matrix4f;
+
 @Mixin(ChatScreen.class)
 public abstract class ChatScreenMixin extends Screen {
 
-    @Shadow protected TextFieldWidget chatField;
+    @Shadow
+    protected TextFieldWidget chatField;
 
     protected ChatScreenMixin(Text title) {
         super(title);
@@ -28,9 +38,18 @@ public abstract class ChatScreenMixin extends Screen {
     @Unique
     private boolean skyblockchatfilter$wrapping = false;
 
+    @Unique
+    private void skyblockchatfilter$drawText(DrawContext context, String text, int x, int y, int color) {
+        Matrix4f matrix = context.getMatrices().peek().getPositionMatrix();
+        VertexConsumerProvider.Immediate immediate = context.getVertexConsumers();
+        this.textRenderer.draw(text, (float) x, (float) y, color, true,
+                matrix, immediate, TextRenderer.TextLayerType.NORMAL, 0, 0xF000F0);
+    }
+
     @Inject(method = "render", at = @At("TAIL"))
     private void renderChatTabs(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (!ChatTabManager.isEnabled()) return;
+        if (!ChatTabManager.isEnabled())
+            return;
 
         int barY = this.height - 26;
         context.fill(2, barY - 1, this.width - 2, barY + 11, 0x80000000);
@@ -46,12 +65,16 @@ public abstract class ChatScreenMixin extends Screen {
                     && mouseY >= barY - 1 && mouseY < barY + 11;
 
             int color;
-            if (active) color = tab.getActiveColor();
-            else if (hovered) color = 0xFFDDDDDD;
-            else if (unread > 0) color = 0xFFBBBBBB;
-            else color = 0xFF888888;
+            if (active)
+                color = tab.getActiveColor();
+            else if (hovered)
+                color = 0xFFDDDDDD;
+            else if (unread > 0)
+                color = 0xFFBBBBBB;
+            else
+                color = 0xFF888888;
 
-            context.drawTextWithShadow(this.textRenderer, name, x, barY + 1, color);
+            skyblockchatfilter$drawText(context, name, x, barY + 1, color);
 
             // underline for active tab
             if (active) {
@@ -62,7 +85,7 @@ public abstract class ChatScreenMixin extends Screen {
             int badgeWidth = 0;
             if (unread > 0 && !active) {
                 String badge = unread > 9 ? "9+" : String.valueOf(unread);
-                context.drawTextWithShadow(this.textRenderer, badge, x + textWidth + 2, barY, 0xFFFF5555);
+                skyblockchatfilter$drawText(context, badge, x + textWidth + 2, barY, 0xFFFF5555);
                 badgeWidth = this.textRenderer.getWidth(badge) + 2;
             }
 
@@ -74,65 +97,109 @@ public abstract class ChatScreenMixin extends Screen {
         if (active != ChatTab.ALL) {
             String hint = "\u00BB " + active.getChatPrefix().trim();
             int hintWidth = this.textRenderer.getWidth(hint);
-            context.drawTextWithShadow(this.textRenderer, hint, this.width - hintWidth - 6, barY + 1, active.getActiveColor());
+            skyblockchatfilter$drawText(context, hint, this.width - hintWidth - 6, barY + 1, active.getActiveColor());
         }
     }
 
-    @Inject(method = "mouseClicked(DDI)Z", at = @At("HEAD"), cancellable = true)
-    private void onChatTabClick(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if (!ChatTabManager.isEnabled() || button != 0) return;
-
-        int barY = this.height - 26;
-        if (mouseY < barY - 1 || mouseY > barY + 11) return;
-
-        int x = 6;
-        for (ChatTab tab : ChatTab.values()) {
-            int textWidth = this.textRenderer.getWidth(tab.getDisplayName());
-            if (mouseX >= x - 2 && mouseX < x + textWidth + 2) {
-                ChatTabManager.setCurrentTab(tab);
-                cir.setReturnValue(true);
-                return;
+    // ChatScreen doesn't override mouseClicked in 1.21.1, so @Inject won't work
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        // tab click (left-click)
+        if (button == 0 && ChatTabManager.isEnabled()) {
+            int barY = this.height - 26;
+            if (mouseY >= barY - 1 && mouseY <= barY + 11) {
+                int x = 6;
+                for (ChatTab tab : ChatTab.values()) {
+                    int textWidth = this.textRenderer.getWidth(tab.getDisplayName());
+                    if (mouseX >= x - 2 && mouseX < x + textWidth + 2) {
+                        ChatTabManager.setCurrentTab(tab);
+                        return true;
+                    }
+                    x += textWidth + 12;
+                }
             }
-            x += textWidth + 12;
         }
+
+        // right-click copy
+        if (button == 1 && SkyblockChatFilterClient.config != null
+                && SkyblockChatFilterClient.config.enableRightClickCopy
+                && this.client != null && this.client.inGameHud != null) {
+            ChatHud chatHud = this.client.inGameHud.getChatHud();
+
+            // public API check — confirms mouse is over a valid chat line
+            if (chatHud.getTextStyleAt(mouseX, mouseY) != null) {
+                ChatHudAccessor accessor = (ChatHudAccessor) chatHud;
+                int scaledHeight = this.client.getWindow().getScaledHeight();
+                double chatScale = chatHud.getChatScale();
+
+                // replicate toChatLineY + getMessageIndex
+                double chatLineY = ((double) scaledHeight - mouseY - 40.0) / chatScale;
+                int visibleIndex = (int) (chatLineY / 9.0) + accessor.getScrolledLines();
+
+                List<ChatHudLine.Visible> visibleMsgs = accessor.getVisibleMessages();
+                List<ChatHudLine> messages = accessor.getMessages();
+
+                if (visibleIndex >= 0 && visibleIndex < visibleMsgs.size()) {
+                    // walk visible lines to find the corresponding full message
+                    int msgIndex = 0;
+                    for (int i = 0; i < visibleIndex; i++) {
+                        if (visibleMsgs.get(i).endOfEntry())
+                            msgIndex++;
+                    }
+                    if (msgIndex < messages.size()) {
+                        String text = messages.get(msgIndex).content().getString();
+                        this.client.keyboard.setClipboard(text);
+                        if (this.client.player != null) {
+                            this.client.player.sendMessage(
+                                    Text.literal("\u00A7a[ChatFilter] \u00A77Copied to clipboard"), true);
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    // Alt+Left/Right to cycle tabs
-    @Inject(method = "keyPressed(III)Z", at = @At("HEAD"), cancellable = true)
-    private void onTabKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (!ChatTabManager.isEnabled()) return;
-        if ((modifiers & GLFW.GLFW_MOD_ALT) == 0) return;
-
-        if (keyCode == GLFW.GLFW_KEY_RIGHT) {
-            ChatTabManager.cycleTab(true);
-            cir.setReturnValue(true);
-        } else if (keyCode == GLFW.GLFW_KEY_LEFT) {
-            ChatTabManager.cycleTab(false);
-            cir.setReturnValue(true);
+    // ChatScreen doesn't override keyPressed in 1.21.1
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (ChatTabManager.isEnabled() && (modifiers & GLFW.GLFW_MOD_ALT) != 0) {
+            if (keyCode == GLFW.GLFW_KEY_RIGHT) {
+                ChatTabManager.cycleTab(true);
+                return true;
+            } else if (keyCode == GLFW.GLFW_KEY_LEFT) {
+                ChatTabManager.cycleTab(false);
+                return true;
+            }
         }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    // scroll on tab bar to cycle
-    @Inject(method = "mouseScrolled", at = @At("HEAD"), cancellable = true)
-    private void onTabBarScroll(double mouseX, double mouseY, double horizontalAmount, double verticalAmount, CallbackInfoReturnable<Boolean> cir) {
-        if (!ChatTabManager.isEnabled()) return;
-
-        int barY = this.height - 26;
-        if (mouseY < barY - 1 || mouseY > barY + 11) return;
-
-        ChatTabManager.cycleTab(verticalAmount < 0);
-        cir.setReturnValue(true);
+    // ChatScreen doesn't override mouseScrolled in 1.21.1
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        if (ChatTabManager.isEnabled()) {
+            int barY = this.height - 26;
+            if (mouseY >= barY - 1 && mouseY <= barY + 11) {
+                ChatTabManager.cycleTab(verticalAmount < 0);
+                return true;
+            }
+        }
+        return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
 
     @Inject(method = "sendMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
     private void wrapChatForTab(String chatText, boolean addToHistory, CallbackInfo ci) {
-        if (skyblockchatfilter$wrapping) return;
+        if (skyblockchatfilter$wrapping)
+            return;
 
         String wrapped = ChatTabManager.wrapOutgoingMessage(chatText);
         if (!wrapped.equals(chatText)) {
             ci.cancel();
             skyblockchatfilter$wrapping = true;
-            ((ChatScreen)(Object)this).sendMessage(wrapped, addToHistory);
+            ((ChatScreen) (Object) this).sendMessage(wrapped, addToHistory);
             skyblockchatfilter$wrapping = false;
         }
     }
