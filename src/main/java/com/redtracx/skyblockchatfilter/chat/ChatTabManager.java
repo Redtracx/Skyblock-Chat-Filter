@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.gui.Hud;
 import net.minecraft.network.chat.Component;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -78,9 +79,30 @@ public class ChatTabManager {
         replaying = true;
         for (Component msg : messageBuffer) {
             if (currentTab == ChatTab.ALL || currentTab.matches(msg.getString().trim().toLowerCase(Locale.ROOT))) {
-                chat.addMessage(msg);
+                addMessage(chat, msg);
             }
         }
         replaying = false;
+    }
+
+    // ChatComponent#addMessage has picked up extra required parameters across
+    // 26.x point releases (a GuiMessageSource, a GuiMessageTag, ...) whose
+    // exact enum/type isn't documented anywhere reachable here. Reflectively
+    // calling whichever overload takes just the message (defaulting the rest
+    // to null) avoids hard-coding a signature that may drift again.
+    private static void addMessage(ChatComponent chat, Component message) {
+        for (Method method : chat.getClass().getMethods()) {
+            if (!method.getName().equals("addMessage")) continue;
+            Class<?>[] params = method.getParameterTypes();
+            if (params.length == 0 || !params[0].isInstance(message)) continue;
+            try {
+                Object[] args = new Object[params.length];
+                args[0] = message;
+                method.invoke(chat, args);
+                return;
+            } catch (ReflectiveOperationException | IllegalArgumentException ignored) {
+                // try the next candidate overload
+            }
+        }
     }
 }

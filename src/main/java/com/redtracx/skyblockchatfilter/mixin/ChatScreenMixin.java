@@ -2,7 +2,6 @@ package com.redtracx.skyblockchatfilter.mixin;
 
 import com.redtracx.skyblockchatfilter.chat.ChatTab;
 import com.redtracx.skyblockchatfilter.chat.ChatTabManager;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
@@ -49,8 +48,12 @@ public abstract class ChatScreenMixin extends Screen {
         }
     }
 
-    @Inject(method = "render", at = @At("HEAD"))
-    private void skyblockchatfilter$updateTabButtons(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    // Refreshing the button labels off tick() instead of render() sidesteps
+    // needing to know the exact type of Screen#render's graphics-context
+    // parameter (renamed GuiGraphics -> GuiGraphicsExtractor as part of a
+    // wider 26.x rendering rework) since this method never draws anything itself.
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void skyblockchatfilter$updateTabButtons(CallbackInfo ci) {
         ChatTab active = ChatTabManager.getCurrentTab();
         for (Map.Entry<ChatTab, Button> entry : skyblockchatfilter$tabButtons.entrySet()) {
             ChatTab tab = entry.getKey();
