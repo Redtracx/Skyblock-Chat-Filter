@@ -11,11 +11,13 @@
 **Skyblock Chat-Filter** is a client-side Fabric mod designed to declutter your chat experience on the Hypixel Skyblock network. It intelligently filters out annoying spam, useless notifications, and repetitive dialogue, leaving your chat clean and focusing on what matters.
 
 ## ✨ Features
-Block out the noise with dedicated toggles for everything you don't care to see:
-- **Hub Trading & Lowballers:** Hides people spamming their auctions or looking to lowball items.
-- **Dungeon Notifications:** Clean up Dungeon runs by hiding Blessing messages, Essence drops, and annoying Watcher dialogue spam.
+Block out the noise with dedicated toggles for everything you don't care to see, grouped into clear categories in the config screen:
+- **Trading & Economy:** Hides Hub Trading spam, lowballers, scam/carry adverts, Fire Sales, Bank Interest payouts, and your own Auction House / Trade confirmations.
+- **Party & Guild:** Mutes party join/leave/kick/disband spam and guild join/leave/promotion spam, without hiding actual party or guild chat.
+- **Dungeon Notifications:** Clean up Dungeon runs by hiding Blessing messages, Essence drops, Kuudra action spam, boss dialogue and annoying Watcher spam.
+- **Combat & Pets:** Hides Autopet/pet level-up spam and ability feedback like "Not enough mana!".
 - **Server Popups & Join Alerts:** Easily mute Lobby Join alerts, RNG Drop broadcasts, and Mystery Box discovery messages.
-- **Internal Prints & System Alerts:** Hides the "Sending to server", "Profile ID:" strings, Co-op chatter, and "Placing blocks too fast!" messages.
+- **Internal Prints & System Alerts:** Hides the "Sending to server", "Profile ID:" strings, Co-op chatter, Stash notifications, and "Placing blocks too fast!" messages.
 - **Minions & Events:** Quiet down your minions ("My storage is full!") and disable automatic event reminder broadcasts.
 
 ## ⚙️ Configuration
