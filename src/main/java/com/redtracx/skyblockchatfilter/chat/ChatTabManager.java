@@ -3,6 +3,9 @@ package com.redtracx.skyblockchatfilter.chat;
 import com.redtracx.skyblockchatfilter.SkyblockChatFilterClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
+// Note: Gui itself doesn't expose the chat component directly (confirmed by a
+// real 26.2 compile error); it's nested one level deeper under Gui#hud.
+import net.minecraft.client.gui.Hud;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -67,7 +70,9 @@ public class ChatTabManager {
         Minecraft client = Minecraft.getInstance();
         if (client == null || client.gui == null) return;
 
-        ChatComponent chat = client.gui.getChat();
+        Hud hud = client.gui.hud;
+        if (hud == null) return;
+        ChatComponent chat = hud.getChat();
         chat.clearMessages(false);
 
         replaying = true;

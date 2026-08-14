@@ -1,28 +1,22 @@
 package com.redtracx.skyblockchatfilter.chat;
 
-import net.minecraft.ChatFormatting;
-
 public enum ChatTab {
-    ALL("All", ChatFormatting.WHITE),
-    PARTY("Party", ChatFormatting.BLUE),
-    GUILD("Guild", ChatFormatting.DARK_GREEN),
-    COOP("Co-op", ChatFormatting.AQUA),
-    DMS("DMs", ChatFormatting.LIGHT_PURPLE);
+    ALL("All", 0xFFFFFFFF),
+    PARTY("Party", 0xFF5555FF),
+    GUILD("Guild", 0xFF00AA00),
+    COOP("Co-op", 0xFF55FFFF),
+    DMS("DMs", 0xFFFF55FF);
 
     private final String displayName;
-    private final ChatFormatting formatting;
+    private final int activeColor;
 
-    ChatTab(String displayName, ChatFormatting formatting) {
+    ChatTab(String displayName, int activeColor) {
         this.displayName = displayName;
-        this.formatting = formatting;
+        this.activeColor = activeColor;
     }
 
     public String getDisplayName() { return displayName; }
-
-    public int getActiveColor() {
-        Integer color = formatting.getColor();
-        return color != null ? color | 0xFF000000 : 0xFFFFFFFF;
-    }
+    public int getActiveColor() { return activeColor; }
 
     public boolean matches(String rawMessage) {
         return switch (this) {
