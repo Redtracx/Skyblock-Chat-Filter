@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -12,20 +12,24 @@ base {
 
 repositories {
     maven { url "https://maven.terraformersmc.com/releases/" } // modmenu
-    maven { url "https://maven.shedaniel.me/" } // cloth config
+    // Cloth Config is consumed via Modrinth's maven mirror: maven.shedaniel.me is
+    // frequently missing fresh releases for the newest Minecraft versions
+    // (see https://github.com/shedaniel/cloth-config/issues/346).
+    maven { url "https://api.modrinth.com/maven" }
 }
 
 dependencies {
+	// Minecraft 26.x ships unobfuscated with official Mojang names, so no mapping
+	// dependency is needed anymore (Yarn is no longer published past 1.21.11).
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
     // ModMenu
-    modImplementation "com.terraformersmc:modmenu:11.0.2"
-    
-    // Cloth Config
-    modApi("me.shedaniel.cloth:cloth-config-fabric:15.0.130") {
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    // Cloth Config (via Modrinth maven, group "maven.modrinth", artifact = project slug)
+    modApi("maven.modrinth:cloth-config:${project.cloth_config_version}+fabric") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 }
@@ -39,13 +43,13 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
 	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

@@ -1,9 +1,9 @@
 <div align="center">
   <h1>Skyblock Chat-Filter</h1>
-  <p>An intelligent, highly-configurable Chat-Filter and Tab-Manager for Hypixel Skyblock on 1.21.x.</p>
+  <p>An intelligent, highly-configurable Chat-Filter and Tab-Manager for Hypixel Skyblock on Minecraft 26.x.</p>
   
   [![Fabric](https://img.shields.io/badge/Platform-Fabric-orange.svg)]()
-  [![Minecraft 1.21.x](https://img.shields.io/badge/Minecraft-1.21.x-brightgreen.svg)]()
+  [![Minecraft 26.x](https://img.shields.io/badge/Minecraft-26.x-brightgreen.svg)]()
 </div>
 
 <br/>
@@ -12,6 +12,7 @@
 
 ## ✨ Features
 Block out the noise with dedicated toggles for everything you don't care to see, grouped into clear categories in the config screen:
+- **Chat Tabs:** A clickable All/Party/Guild/Co-op/DMs tab bar above the chat input. Click a tab, scroll over the bar, or press Alt+Left/Right to switch — unread messages are badge-counted per tab. Can be fully disabled in the config to fall back to plain, unfiltered chat.
 - **Trading & Economy:** Hides Hub Trading spam, lowballers, scam/carry adverts, Fire Sales, Bank Interest payouts, and your own Auction House / Trade confirmations.
 - **Party & Guild:** Mutes party join/leave/kick/disband spam and guild join/leave/promotion spam, without hiding actual party or guild chat.
 - **Dungeon Notifications:** Clean up Dungeon runs by hiding Blessing messages, Essence drops, Kuudra action spam, boss dialogue and annoying Watcher spam.
@@ -21,13 +22,13 @@ Block out the noise with dedicated toggles for everything you don't care to see,
 - **Minions & Events:** Quiet down your minions ("My storage is full!") and disable automatic event reminder broadcasts.
 
 ## ⚙️ Configuration
-The mod is completely customizable in-game! All filters can be toggled on or off individually based on your preferences.
+The mod is completely customizable in-game! All filters — including the chat tab bar itself — can be toggled on or off individually based on your preferences.
 You only need to install [Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth Config API](https://modrinth.com/mod/cloth-config) (which is bundled in many modpacks but can be installed manually).
 
 *To edit your settings, simply navigate to your `Mods` menu, select `Skyblock Chat-Filter`, and hit the configuration button! Every setting features detailed tooltips and examples to help you understand what it filters.*
 
 ## 📥 Installation
-1. Ensure you have the **[Fabric Loader](https://fabricmc.net/)** installed for Minecraft 1.21.x.
+1. Ensure you have the **[Fabric Loader](https://fabricmc.net/)** installed for Minecraft 26.x.
 2. Ensure you have downloaded the **[Fabric API](https://modrinth.com/mod/fabric-api)**.
 3. Download the latest version of **Skyblock Chat-Filter**.
 4. Drop the `.jar` file into your `.minecraft/mods` folder.

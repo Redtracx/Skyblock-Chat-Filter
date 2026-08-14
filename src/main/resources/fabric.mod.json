@@ -3,7 +3,7 @@
   "id": "skyblockchatfilter",
   "version": "${version}",
   "name": "Skyblock Chat-Filter",
-  "description": "An intelligent Skyblock Chat-Filter / Tab-Manager for 1.21.x",
+  "description": "An intelligent Skyblock Chat-Filter / Tab-Manager for 26.x",
   "authors": [
     "redtracx"
   ],
@@ -25,9 +25,9 @@
     "skyblockchatfilter.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.5",
-    "minecraft": ">=1.21 <1.22",
-    "java": ">=21",
+    "fabricloader": ">=0.19.3",
+    "minecraft": ">=26.2 <26.3",
+    "java": ">=25",
     "fabric-api": "*"
   }
 }

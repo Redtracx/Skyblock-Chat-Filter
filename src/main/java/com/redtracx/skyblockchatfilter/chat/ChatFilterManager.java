@@ -2,12 +2,12 @@ package com.redtracx.skyblockchatfilter.chat;
 
 import com.redtracx.skyblockchatfilter.SkyblockChatFilterClient;
 import com.redtracx.skyblockchatfilter.config.ModConfig;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 import java.util.Locale;
 
 public class ChatFilterManager {
-    public static boolean shouldHideMessage(Text message) {
+    public static boolean shouldHideMessage(Component message) {
         ModConfig config = SkyblockChatFilterClient.config;
         if (config == null) return false;
 

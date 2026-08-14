@@ -3,7 +3,8 @@
   "package": "com.redtracx.skyblockchatfilter.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ChatHudMixin"
+    "ChatComponentMixin",
+    "ChatScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

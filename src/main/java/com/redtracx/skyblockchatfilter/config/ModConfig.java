@@ -103,6 +103,12 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 2)
     public boolean hideAbilityMessages = false;
 
+    // --- Chat Tabs ---
+
+    @ConfigEntry.Category("chattabs")
+    @ConfigEntry.Gui.Tooltip(count = 2)
+    public boolean enableChatTabs = true;
+
     // --- Dungeons ---
 
     @ConfigEntry.Category("dungeons")
