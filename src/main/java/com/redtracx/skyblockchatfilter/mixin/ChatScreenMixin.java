@@ -3,6 +3,7 @@ package com.redtracx.skyblockchatfilter.mixin;
 import com.redtracx.skyblockchatfilter.chat.ChatTab;
 import com.redtracx.skyblockchatfilter.chat.ChatTabManager;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Field;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -26,6 +28,9 @@ public abstract class ChatScreenMixin extends Screen {
     @Unique
     private final Map<ChatTab, Button> skyblockchatfilter$tabButtons = new EnumMap<>(ChatTab.class);
 
+    @Unique
+    private int skyblockchatfilter$barY;
+
     protected ChatScreenMixin(Component title) {
         super(title);
     }
@@ -39,17 +44,45 @@ public abstract class ChatScreenMixin extends Screen {
         skyblockchatfilter$tabButtons.clear();
         if (!ChatTabManager.isEnabled()) return;
 
-        int barY = this.height - 24;
+        skyblockchatfilter$barY = skyblockchatfilter$findInputBoxY() - 16;
+
         int x = 4;
         for (ChatTab tab : ChatTab.values()) {
             int width = this.font.width(tab.getDisplayName()) + 12;
             Button button = Button.builder(Component.literal(tab.getDisplayName()), btn -> ChatTabManager.setCurrentTab(tab))
-                    .bounds(x, barY, width, 14)
+                    .bounds(x, skyblockchatfilter$barY, width, 14)
                     .build();
             skyblockchatfilter$tabButtons.put(tab, button);
             this.addRenderableWidget(button);
             x += width + 2;
         }
+    }
+
+    // The bar sits a fixed distance above the chat input box, wherever that
+    // box actually ends up - a hardcoded "screen height minus a constant"
+    // position (the previous approach) overlapped the input text once another
+    // row (e.g. a search bar from another mod, or a future vanilla addition)
+    // pushed the real input box away from its usual spot. Located by field
+    // TYPE rather than name, since @Shadow-ing the field by its (unverified)
+    // exact name would carry the same stale-mapping risk that broke tick()
+    // in 1.1.1 - a missing EditBox here just falls back to a fixed offset
+    // instead of crashing.
+    @Unique
+    private int skyblockchatfilter$findInputBoxY() {
+        try {
+            for (Field field : this.getClass().getDeclaredFields()) {
+                if (EditBox.class.isAssignableFrom(field.getType())) {
+                    field.setAccessible(true);
+                    Object value = field.get(this);
+                    if (value instanceof EditBox editBox) {
+                        return editBox.getY();
+                    }
+                }
+            }
+        } catch (ReflectiveOperationException | SecurityException ignored) {
+            // fall through to the default below
+        }
+        return this.height - 12;
     }
 
     // Refreshing the button labels off tick() instead of render() sidesteps
@@ -83,9 +116,8 @@ public abstract class ChatScreenMixin extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        if (ChatTabManager.isEnabled()) {
-            int barY = this.height - 24;
-            if (mouseY >= barY - 1 && mouseY <= barY + 15) {
+        if (ChatTabManager.isEnabled() && !skyblockchatfilter$tabButtons.isEmpty()) {
+            if (mouseY >= skyblockchatfilter$barY - 1 && mouseY <= skyblockchatfilter$barY + 15) {
                 ChatTabManager.cycleTab(verticalAmount < 0);
                 return true;
             }
