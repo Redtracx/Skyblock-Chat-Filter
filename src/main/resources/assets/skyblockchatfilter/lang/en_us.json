@@ -2,6 +2,10 @@
   "text.autoconfig.skyblockchatfilter.title": "Skyblock Chat-Filter Configuration",
 
   "text.autoconfig.skyblockchatfilter.category.general": "General Filters",
+  "text.autoconfig.skyblockchatfilter.category.trading": "Trading & Economy",
+  "text.autoconfig.skyblockchatfilter.category.social": "Party & Guild",
+  "text.autoconfig.skyblockchatfilter.category.combat": "Combat & Pets",
+  "text.autoconfig.skyblockchatfilter.category.chattabs": "Chat Tabs",
   "text.autoconfig.skyblockchatfilter.category.dungeons": "Dungeon Filters",
 
   "text.autoconfig.skyblockchatfilter.option.hideHubTrades": "Hide Hub Trades",
@@ -90,5 +94,29 @@
 
   "text.autoconfig.skyblockchatfilter.option.hideBossDialogue": "Hide Boss Dialogue",
   "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[0]": "Globally hides chat from bosses (e.g. Sadan, Necron, M7 Dragons).",
-  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[1]": "Example: '[BOSS] Necron: Finally, a worthy opponent!'"
+  "text.autoconfig.skyblockchatfilter.option.hideBossDialogue.@Tooltip[1]": "Example: '[BOSS] Necron: Finally, a worthy opponent!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideBankInterest": "Hide Bank Interest",
+  "text.autoconfig.skyblockchatfilter.option.hideBankInterest.@Tooltip[0]": "Hides the periodic coin interest payout message from your Bank.",
+  "text.autoconfig.skyblockchatfilter.option.hideBankInterest.@Tooltip[1]": "Example: 'You have received 4,213 coins in Bank Interest!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideAuctionHouseNotifications": "Hide Auction House Notifications",
+  "text.autoconfig.skyblockchatfilter.option.hideAuctionHouseNotifications.@Tooltip[0]": "Hides your own Auction House sold/outbid/purchase confirmations.",
+  "text.autoconfig.skyblockchatfilter.option.hideAuctionHouseNotifications.@Tooltip[1]": "Example: 'Auction House > Your auction for Hyperion has sold!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideTradeNotifications": "Hide Trade Notifications",
+  "text.autoconfig.skyblockchatfilter.option.hideTradeNotifications.@Tooltip[0]": "Hides trade completed/cancelled confirmation messages.",
+  "text.autoconfig.skyblockchatfilter.option.hideTradeNotifications.@Tooltip[1]": "Example: 'Trade completed with Player!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hidePartyNotifications": "Hide Party Notifications",
+  "text.autoconfig.skyblockchatfilter.option.hidePartyNotifications.@Tooltip[0]": "Hides party join/leave/kick/disband spam. Actual party chat still shows.",
+  "text.autoconfig.skyblockchatfilter.option.hidePartyNotifications.@Tooltip[1]": "Example: 'Player has joined the party!'",
+
+  "text.autoconfig.skyblockchatfilter.option.hideGuildNotifications": "Hide Guild Notifications",
+  "text.autoconfig.skyblockchatfilter.option.hideGuildNotifications.@Tooltip[0]": "Hides guild join/leave/promotion/demotion spam. Actual guild chat still shows.",
+  "text.autoconfig.skyblockchatfilter.option.hideGuildNotifications.@Tooltip[1]": "Example: 'Guild > Player has joined the guild!'",
+
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs": "Enable Chat Tabs",
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[0]": "Adds a clickable All/Party/Guild/Co-op/DMs tab bar to the chat window. Turn off to disable the tab bar entirely and see unfiltered chat.",
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[1]": "Click a tab, scroll over the bar, or press Alt+Left/Right to switch tabs."
 }
