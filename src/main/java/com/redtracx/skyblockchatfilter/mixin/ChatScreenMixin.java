@@ -30,7 +30,11 @@ public abstract class ChatScreenMixin extends Screen {
         super(title);
     }
 
-    @Inject(method = "init", at = @At("TAIL"))
+    // require = 0: if this target ever goes stale again on some future
+    // Minecraft point release, the tab bar silently stops appearing instead
+    // of crashing the whole game at launch (see the tick() note below for why
+    // that's a real risk on this API surface).
+    @Inject(method = "init", at = @At("TAIL"), require = 0)
     private void skyblockchatfilter$addTabButtons(CallbackInfo ci) {
         skyblockchatfilter$tabButtons.clear();
         if (!ChatTabManager.isEnabled()) return;
@@ -52,8 +56,16 @@ public abstract class ChatScreenMixin extends Screen {
     // needing to know the exact type of Screen#render's graphics-context
     // parameter (renamed GuiGraphics -> GuiGraphicsExtractor as part of a
     // wider 26.x rendering rework) since this method never draws anything itself.
-    @Inject(method = "tick", at = @At("TAIL"))
-    private void skyblockchatfilter$updateTabButtons(CallbackInfo ci) {
+    //
+    // This has to be a plain @Override, not @Inject: ChatScreen doesn't declare
+    // tick() itself (it's only inherited from Screen), and @Inject can only
+    // attach to a method the mixin's target class declares directly - trying
+    // it as @Inject crashes at mixin-apply time with "could not find any
+    // targets matching 'tick' in ChatScreen", not at compile time, since the
+    // method name is just an annotation string javac never checks.
+    @Override
+    public void tick() {
+        super.tick();
         ChatTab active = ChatTabManager.getCurrentTab();
         for (Map.Entry<ChatTab, Button> entry : skyblockchatfilter$tabButtons.entrySet()) {
             ChatTab tab = entry.getKey();
