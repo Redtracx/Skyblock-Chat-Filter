@@ -1,0 +1,85 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+}
+
+version = rootProject.mod_version
+group = rootProject.maven_group
+
+base {
+	archivesName = "${rootProject.archives_base_name}-26.1"
+}
+
+// Java sources and the version-independent resources (icon, lang, mixins
+// config) live once at the repo root and are shared by every Minecraft-version
+// module; only fabric.mod.json (different "minecraft" depends range per
+// module) lives locally under this module's own src/main/resources.
+sourceSets {
+	main {
+		java {
+			srcDirs = ["${rootDir}/src/main/java"]
+		}
+		resources {
+			srcDirs = ["${rootDir}/src/main/resources", "src/main/resources"]
+		}
+	}
+}
+
+repositories {
+    maven { url "https://maven.terraformersmc.com/releases/" } // modmenu
+    // Cloth Config is consumed via Modrinth's maven mirror: maven.shedaniel.me is
+    // frequently missing fresh releases for the newest Minecraft versions
+    // (see https://github.com/shedaniel/cloth-config/issues/346).
+    maven { url "https://api.modrinth.com/maven" }
+}
+
+dependencies {
+	// Minecraft 26.x ships unobfuscated with official Mojang names, so no mapping
+	// dependency is needed anymore (Yarn is no longer published past 1.21.11).
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+    // ModMenu
+    // Minecraft 26.x is unobfuscated, so Loom no longer remaps mod jars and the
+    // special modImplementation/modApi configurations it used to provide are gone.
+    implementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    // Cloth Config (via Modrinth maven, group "maven.modrinth", artifact = project slug)
+    api("maven.modrinth:cloth-config:${project.cloth_config_version}+fabric") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	from("${rootDir}/LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}"}
+	}
+}
+
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			artifactId = project.base.archivesName.get()
+			from components.java
+		}
+	}
+}

@@ -3,11 +3,9 @@ package com.redtracx.skyblockchatfilter.chat;
 import com.redtracx.skyblockchatfilter.SkyblockChatFilterClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
-// Note: Gui itself doesn't expose the chat component directly (confirmed by a
-// real 26.2 compile error); it's nested one level deeper under Gui#hud.
-import net.minecraft.client.gui.Hud;
 import net.minecraft.network.chat.Component;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -69,11 +67,10 @@ public class ChatTabManager {
 
     private static void replayMessages() {
         Minecraft client = Minecraft.getInstance();
-        if (client == null || client.gui == null) return;
+        if (client == null) return;
 
-        Hud hud = client.gui.hud;
-        if (hud == null) return;
-        ChatComponent chat = hud.getChat();
+        ChatComponent chat = getChatComponent(client);
+        if (chat == null) return;
         chat.clearMessages(false);
 
         replaying = true;
@@ -83,6 +80,43 @@ public class ChatTabManager {
             }
         }
         replaying = false;
+    }
+
+    // Where the chat component hangs off Gui has moved between 26.x point
+    // releases (directly via Gui#getChat() on some, nested one level deeper
+    // under a Gui#hud field on others). Reflection here - rather than a hard
+    // import of whichever shape one specific version happens to have - lets
+    // the same compiled class work across both the 26.1 and 26.2 builds.
+    private static ChatComponent getChatComponent(Minecraft client) {
+        Object gui = client.gui;
+        if (gui == null) return null;
+
+        ChatComponent chat = invokeGetChat(gui);
+        if (chat != null) return chat;
+
+        try {
+            Field hudField = gui.getClass().getField("hud");
+            Object hud = hudField.get(gui);
+            if (hud != null) {
+                chat = invokeGetChat(hud);
+                if (chat != null) return chat;
+            }
+        } catch (ReflectiveOperationException ignored) {
+            // fall through
+        }
+
+        return null;
+    }
+
+    private static ChatComponent invokeGetChat(Object holder) {
+        try {
+            Method method = holder.getClass().getMethod("getChat");
+            Object result = method.invoke(holder);
+            if (result instanceof ChatComponent chat) return chat;
+        } catch (ReflectiveOperationException ignored) {
+            // fall through
+        }
+        return null;
     }
 
     // ChatComponent#addMessage has picked up extra required parameters across

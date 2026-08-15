@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "skyblockchatfilter",
+  "version": "${version}",
+  "name": "Skyblock Chat-Filter",
+  "description": "An intelligent Skyblock Chat-Filter / Tab-Manager for 26.1.x",
+  "authors": [
+    "redtracx"
+  ],
+  "contact": {
+    "repo": "https://github.com/redtracx/Skyblock-Chat-Filter"
+  },
+  "license": "MIT",
+  "icon": "assets/skyblockchatfilter/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.redtracx.skyblockchatfilter.SkyblockChatFilterClient"
+    ],
+    "modmenu": [
+      "com.redtracx.skyblockchatfilter.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "skyblockchatfilter.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": ">=26.1 <26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

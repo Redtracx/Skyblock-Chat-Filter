@@ -3,11 +3,26 @@ plugins {
 	id 'maven-publish'
 }
 
-version = project.mod_version
-group = project.maven_group
+version = rootProject.mod_version
+group = rootProject.maven_group
 
 base {
-	archivesName = project.archives_base_name
+	archivesName = "${rootProject.archives_base_name}-26.2"
+}
+
+// Java sources and the version-independent resources (icon, lang, mixins
+// config) live once at the repo root and are shared by every Minecraft-version
+// module; only fabric.mod.json (different "minecraft" depends range per
+// module) lives locally under this module's own src/main/resources.
+sourceSets {
+	main {
+		java {
+			srcDirs = ["${rootDir}/src/main/java"]
+		}
+		resources {
+			srcDirs = ["${rootDir}/src/main/resources", "src/main/resources"]
+		}
+	}
 }
 
 repositories {
@@ -55,7 +70,7 @@ java {
 }
 
 jar {
-	from("LICENSE") {
+	from("${rootDir}/LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
 }
@@ -63,7 +78,7 @@ jar {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
+			artifactId = project.base.archivesName.get()
 			from components.java
 		}
 	}

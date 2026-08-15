@@ -37,6 +37,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.event.inputs.version || github.ref_name }}
         run: |
-          gh release create "$TAG" build/libs/*.jar \
+          gh release create "$TAG" fabric-26.1/build/libs/*.jar fabric-26.2/build/libs/*.jar \
             --title "$TAG" \
             --generate-notes
