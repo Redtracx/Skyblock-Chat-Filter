@@ -10,3 +10,9 @@ pluginManagement {
 }
 
 rootProject.name = 'skyblock-chat-filter'
+
+// Minecraft 26.x is unobfuscated and its internal GUI/rendering APIs have
+// already drifted between 26.1 and 26.2 point releases (see each module's
+// build.gradle for specifics), so each supported version gets its own Loom
+// module compiled against its own game jar, producing its own jar file.
+include 'fabric-26.1', 'fabric-26.2'

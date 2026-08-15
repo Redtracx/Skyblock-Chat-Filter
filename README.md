@@ -3,7 +3,7 @@
   <p>An intelligent, highly-configurable Chat-Filter and Tab-Manager for Hypixel Skyblock on Minecraft 26.x.</p>
   
   [![Fabric](https://img.shields.io/badge/Platform-Fabric-orange.svg)]()
-  [![Minecraft 26.x](https://img.shields.io/badge/Minecraft-26.x-brightgreen.svg)]()
+  [![Minecraft 26.1.x | 26.2.x](https://img.shields.io/badge/Minecraft-26.1.x%20%7C%2026.2.x-brightgreen.svg)]()
 </div>
 
 <br/>
@@ -28,9 +28,15 @@ You only need to install [Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth
 *To edit your settings, simply navigate to your `Mods` menu, select `Skyblock Chat-Filter`, and hit the configuration button! Every setting features detailed tooltips and examples to help you understand what it filters.*
 
 ## 📥 Installation
-1. Ensure you have the **[Fabric Loader](https://fabricmc.net/)** installed for Minecraft 26.x.
-2. Ensure you have downloaded the **[Fabric API](https://modrinth.com/mod/fabric-api)**.
-3. Download the latest version of **Skyblock Chat-Filter**.
+Minecraft 26.x's internal APIs have shifted between point releases, so this mod ships as **two separate jars** — grab the one matching your Minecraft version from the [Releases page](https://github.com/redtracx/Skyblock-Chat-Filter/releases):
+- `skyblock-chat-filter-26.1-*.jar` for Minecraft 26.1.x
+- `skyblock-chat-filter-26.2-*.jar` for Minecraft 26.2.x
+
+Installing the wrong one for your Minecraft version will make Fabric Loader refuse to start with an "incompatible mods" error naming the required version — if you see that, grab the other jar.
+
+1. Ensure you have the **[Fabric Loader](https://fabricmc.net/)** installed for your Minecraft version.
+2. Ensure you have downloaded the **[Fabric API](https://modrinth.com/mod/fabric-api)** build matching that same version.
+3. Download the matching **Skyblock Chat-Filter** jar from the Releases page.
 4. Drop the `.jar` file into your `.minecraft/mods` folder.
 5. Launch the game and enjoy a clean chat!
 
