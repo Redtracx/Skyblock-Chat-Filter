@@ -14,7 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPacketListener.class)
 public abstract class ClientPacketListenerChatMixin {
 
-    @Inject(method = "handleSystemChat(Lnet/minecraft/network/protocol/game/ClientboundSystemChatPacket;)V", at = @At("HEAD"), cancellable = true)
+    // require = 0: a stale target here should silently disable filtering
+    // rather than crash the whole game at launch - see ChatScreenMixin#tick()
+    // for why a hard failure actually happened once already on this mod.
+    @Inject(method = "handleSystemChat(Lnet/minecraft/network/protocol/game/ClientboundSystemChatPacket;)V", at = @At("HEAD"), cancellable = true, require = 0)
     private void skyblockchatfilter$onSystemChat(ClientboundSystemChatPacket packet, CallbackInfo ci) {
         if (packet.overlay()) return; // never touch the action bar
 
@@ -26,7 +29,7 @@ public abstract class ClientPacketListenerChatMixin {
         }
     }
 
-    @Inject(method = "handlePlayerChat(Lnet/minecraft/network/protocol/game/ClientboundPlayerChatPacket;)V", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "handlePlayerChat(Lnet/minecraft/network/protocol/game/ClientboundPlayerChatPacket;)V", at = @At("HEAD"), cancellable = true, require = 0)
     private void skyblockchatfilter$onPlayerChat(ClientboundPlayerChatPacket packet, CallbackInfo ci) {
         String body = packet.body().content();
         if (body == null) return;
