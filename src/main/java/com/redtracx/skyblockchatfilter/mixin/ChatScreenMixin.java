@@ -31,6 +31,9 @@ public abstract class ChatScreenMixin extends Screen {
     @Unique
     private int skyblockchatfilter$barY;
 
+    @Unique
+    private EditBox skyblockchatfilter$inputBox;
+
     protected ChatScreenMixin(Component title) {
         super(title);
     }
@@ -42,14 +45,23 @@ public abstract class ChatScreenMixin extends Screen {
     @Inject(method = "init", at = @At("TAIL"), require = 0)
     private void skyblockchatfilter$addTabButtons(CallbackInfo ci) {
         skyblockchatfilter$tabButtons.clear();
+        skyblockchatfilter$inputBox = skyblockchatfilter$findInputBox();
         if (!ChatTabManager.isEnabled()) return;
 
-        skyblockchatfilter$barY = skyblockchatfilter$findInputBoxY() - 16;
+        int inputY = skyblockchatfilter$inputBox != null ? skyblockchatfilter$inputBox.getY() : this.height - 12;
+        skyblockchatfilter$barY = inputY - 16;
 
         int x = 4;
         for (ChatTab tab : ChatTab.values()) {
             int width = this.font.width(tab.getDisplayName()) + 12;
-            Button button = Button.builder(Component.literal(tab.getDisplayName()), btn -> ChatTabManager.setCurrentTab(tab))
+            Button button = Button.builder(Component.literal(tab.getDisplayName()), btn -> {
+                        ChatTabManager.setCurrentTab(tab);
+                        // Clicking a Button focuses the Button, not the chat input -
+                        // without this, typing right after switching tabs goes nowhere.
+                        if (skyblockchatfilter$inputBox != null) {
+                            this.setInitialFocus(skyblockchatfilter$inputBox);
+                        }
+                    })
                     .bounds(x, skyblockchatfilter$barY, width, 14)
                     .build();
             skyblockchatfilter$tabButtons.put(tab, button);
@@ -66,23 +78,23 @@ public abstract class ChatScreenMixin extends Screen {
     // TYPE rather than name, since @Shadow-ing the field by its (unverified)
     // exact name would carry the same stale-mapping risk that broke tick()
     // in 1.1.1 - a missing EditBox here just falls back to a fixed offset
-    // instead of crashing.
+    // instead of crashing, and skips the refocus-after-click fix above too.
     @Unique
-    private int skyblockchatfilter$findInputBoxY() {
+    private EditBox skyblockchatfilter$findInputBox() {
         try {
             for (Field field : this.getClass().getDeclaredFields()) {
                 if (EditBox.class.isAssignableFrom(field.getType())) {
                     field.setAccessible(true);
                     Object value = field.get(this);
                     if (value instanceof EditBox editBox) {
-                        return editBox.getY();
+                        return editBox;
                     }
                 }
             }
         } catch (ReflectiveOperationException | SecurityException ignored) {
-            // fall through to the default below
+            // fall through to null
         }
-        return this.height - 12;
+        return null;
     }
 
     // Refreshing the button labels off tick() instead of render() sidesteps
@@ -119,6 +131,11 @@ public abstract class ChatScreenMixin extends Screen {
         if (ChatTabManager.isEnabled() && !skyblockchatfilter$tabButtons.isEmpty()) {
             if (mouseY >= skyblockchatfilter$barY - 1 && mouseY <= skyblockchatfilter$barY + 15) {
                 ChatTabManager.cycleTab(verticalAmount < 0);
+                // Same focus-stealing issue as the button click above - scrolling
+                // over the bar shouldn't leave the input box unable to receive text.
+                if (skyblockchatfilter$inputBox != null) {
+                    this.setInitialFocus(skyblockchatfilter$inputBox);
+                }
                 return true;
             }
         }

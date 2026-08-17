@@ -12,7 +12,7 @@
 
 ## ✨ Features
 Block out the noise with dedicated toggles for everything you don't care to see, grouped into clear categories in the config screen:
-- **Chat Tabs:** A clickable All/Party/Guild/Co-op/DMs tab bar above the chat input. Click a tab, scroll over the bar, or press Alt+Left/Right to switch — unread messages are badge-counted per tab. Can be fully disabled in the config to fall back to plain, unfiltered chat.
+- **Chat Tabs (off by default):** A clickable All/Party/Guild/Co-op/DMs tab bar above the chat input. Click a tab or scroll over the bar to switch — unread messages are badge-counted per tab. Enable it in the config; leave it off for plain, unfiltered chat.
 - **Trading & Economy:** Hides Hub Trading spam, lowballers, scam/carry adverts, Fire Sales, Bank Interest payouts, and your own Auction House / Trade confirmations.
 - **Party & Guild:** Mutes party join/leave/kick/disband spam and guild join/leave/promotion spam, without hiding actual party or guild chat.
 - **Dungeon Notifications:** Clean up Dungeon runs by hiding Blessing messages, Essence drops, Kuudra action spam, boss dialogue and annoying Watcher spam.

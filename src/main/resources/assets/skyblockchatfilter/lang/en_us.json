@@ -118,5 +118,5 @@
 
   "text.autoconfig.skyblockchatfilter.option.enableChatTabs": "Enable Chat Tabs",
   "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[0]": "Adds a clickable All/Party/Guild/Co-op/DMs tab bar to the chat window. Turn off to disable the tab bar entirely and see unfiltered chat.",
-  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[1]": "Click a tab, scroll over the bar, or press Alt+Left/Right to switch tabs."
+  "text.autoconfig.skyblockchatfilter.option.enableChatTabs.@Tooltip[1]": "Click a tab or scroll over the bar to switch tabs. Off by default."
 }
